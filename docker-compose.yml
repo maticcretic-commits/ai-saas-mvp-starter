@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - LEADS_DB=/data/leads.db
+    volumes:
+      - leads-data:/data
+    restart: unless-stopped
+
+volumes:
+  leads-data:
