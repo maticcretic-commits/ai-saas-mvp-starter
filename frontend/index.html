@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI SaaS MVP Starter — Lead Routing</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    form { display: grid; gap: 0.6rem; margin-bottom: 1rem; }
+    input, select, textarea { padding: 0.5rem; font-size: 1rem; }
+    button { padding: 0.6rem; font-size: 1rem; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.4rem; text-align: left; font-size: 0.9rem; }
+    .tier-hot { background: #ffe0e0; } .tier-warm { background: #fff3d6; } .tier-cold { background: #e8e8e8; }
+    #result { margin-top: 0.6rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>AI SaaS MVP Starter</h1>
+  <p>Practice demo: submit a lead and the agentic workflow extracts, scores, routes, and logs it.</p>
+
+  <h2>Submit a lead</h2>
+  <form id="leadForm">
+    <input id="name" placeholder="Name" required />
+    <input id="email" type="email" placeholder="Email" required />
+    <input id="company" placeholder="Company (optional)" />
+    <select id="source">
+      <option value="web">web</option>
+      <option value="ads">ads</option>
+      <option value="referral">referral</option>
+      <option value="partner">partner</option>
+    </select>
+    <textarea id="message" placeholder="Message (optional)"></textarea>
+    <button type="submit">Route lead</button>
+  </form>
+  <div id="result"></div>
+
+  <h2>Routed leads</h2>
+  <table>
+    <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Score</th><th>Tier</th><th>Owner</th><th>Decision</th></tr></thead>
+    <tbody id="leads"></tbody>
+  </table>
+
+  <script>
+    const API = location.origin;
+    async function loadLeads() {
+      const res = await fetch(API + "/api/leads");
+      const data = await res.json();
+      document.getElementById("leads").innerHTML = data.leads.map(l =>
+        `<tr class="tier-${l.tier}"><td>${l.id}</td><td>${l.name}</td><td>${l.email}</td>` +
+        `<td>${l.score}</td><td>${l.tier}</td><td>${l.owner}</td><td>${l.decision}</td></tr>`
+      ).join("");
+    }
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        company: document.getElementById("company").value,
+        source: document.getElementById("source").value,
+        message: document.getElementById("message").value,
+      };
+      const res = await fetch(API + "/api/leads/route", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      document.getElementById("result").textContent = res.ok
+        ? `Routed: score ${data.score}, tier ${data.tier}, owner ${data.owner}`
+        : `Error: ${data.error || res.status} — ${JSON.stringify(data.detail || "")}`;
+      if (res.ok) loadLeads();
+    });
+    loadLeads();
+  </script>
+</body>
+</html>
