@@ -83,3 +83,9 @@ All errors return clean JSON (`{"error": ..., "detail": ...}`); every request is
 - [ ] Try adding a 5th agent step: draft a personalized outreach note per tier.
 - [ ] Add a `/api/stats` endpoint (counts per tier/owner).
 - [ ] Harden scoring: turn signals into a config file instead of code constants.
+
+## Support My Work
+
+If you find this project useful, consider supporting my work with a Bitcoin donation:
+
+`BC1Q6Q75K8ZJXVW7W02LMDPRPY6XX6QK4LZZ2RMVAY`
