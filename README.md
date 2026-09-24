@@ -1,5 +1,10 @@
 # AI SaaS MVP Starter
 
+[![GitHub stars](https://img.shields.io/github/stars/maticcretic-commits/ai-saas-mvp-starter?style=social)](https://github.com/maticcretic-commits/ai-saas-mvp-starter/stargazers)
+[![Last commit](https://img.shields.io/github/last-commit/maticcretic-commits/ai-saas-mvp-starter)](https://github.com/maticcretic-commits/ai-saas-mvp-starter/commits/main)
+[![Cost: Free](https://img.shields.io/badge/cost-%E2%82%B90-brightgreen)](https://github.com/maticcretic-commits/ai-saas-mvp-starter)
+
+
 **Practice/demo starter for learning** — a minimal "AI-powered SaaS feature" template
 showing the moving parts of a fixed-scope MVP build: a small front-end page, a
 backend API with an **agentic lead-routing workflow**, SQLite for state, and Docker
